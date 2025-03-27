@@ -1,0 +1,38 @@
+<div class="user-list-container">
+    <h2>Listado de Usuarios</h2>
+    
+    <div *ngIf="isLoading" class="loading">
+      <p>Cargando usuarios...</p>
+    </div>
+  
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  
+    <table *ngIf="!isLoading && users.length">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Rol</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.nombre }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.rol }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="!isLoading && !users.length" class="no-users">
+      No se encontraron usuarios
+    </div>
+  
+    <button routerLink="/admin/users" class="btn-back">
+      Volver a crear usuarios
+    </button>
+  </div>

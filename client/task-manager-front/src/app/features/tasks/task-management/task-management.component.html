@@ -1,0 +1,52 @@
+<div class="task-create-container">
+    <h2>Crear Nueva Tarea</h2>
+    
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Título:</label>
+        <input type="text" [(ngModel)]="newTask.titulo" name="titulo" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Descripción:</label>
+        <textarea [(ngModel)]="newTask.descripcion" name="descripcion" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Estado:</label>
+        <select [(ngModel)]="newTask.estado" name="estado">
+          <option value="PENDIENTE">Pendiente</option>
+          <option value="EN_PROGRESO">En progreso</option>
+          <option value="COMPLETADA">Completada</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Asignar a:</label>
+        <select [(ngModel)]="newTask.usuarioAsignadoId" name="usuarioAsignadoId">
+          <option [value]="null">-- Seleccionar usuario --</option>
+          <option *ngFor="let user of users" [value]="user.id">
+            {{ user.nombre }} ({{ user.email }})
+          </option>
+        </select>
+      </div>
+      
+      <div class="message-container">
+        <div *ngIf="message" class="success-message">
+          {{ message }}
+        </div>
+        <div *ngIf="error" class="error-message">
+          {{ error }}
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" [disabled]="isLoading">
+          {{ isLoading ? 'Creando...' : 'Crear Tarea' }}
+        </button>
+        <button type="button" class="back-btn" routerLink="/dashboard">
+          Volver al Dashboard
+        </button>
+      </div>
+    </form>
+  </div>

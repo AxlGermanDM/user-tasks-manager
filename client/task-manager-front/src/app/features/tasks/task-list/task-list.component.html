@@ -1,0 +1,62 @@
+<div class="task-list-container">
+  <h2>Listado de Tareas</h2>
+  
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Cargando tareas...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!isLoading && tasks.length === 0" class="empty-message">
+    No se encontraron tareas registradas
+  </div>
+
+  <table *ngIf="!isLoading && tasks.length" class="task-table">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Asignado a</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.titulo }}</td>
+        <td>{{ task.descripcion }}</td>
+        <td>
+          <select
+                  [(ngModel)]="task.estado" 
+                  (ngModelChange)="task.estado = $event; onStatusChange(task, $event)"
+                  [class.status-pendiente]="task.estado === 'PENDIENTE'"
+                  [class.status-progreso]="task.estado === 'EN_PROGRESO'"
+                  [class.status-completada]="task.estado === 'COMPLETADA'"
+                  class="status-select">
+            <option value="PENDIENTE">PENDIENTE</option>
+            <option value="EN_PROGRESO">EN_PROGRESO</option>
+            <option value="COMPLETADA">COMPLETADA</option>
+          </select>
+        </td>
+        <td>{{ getAssignedUserName(task.usuarioAsignadoId) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="action-buttons">
+    <button routerLink="/tasks/create" class="primary-btn">
+      Crear Nueva Tarea
+    </button>
+    <button routerLink="/dashboard" class="secondary-btn">
+      Volver al Administrador
+    </button>
+  </div>
+
+  <div *ngIf="errorState.show" class="error-container">
+    <div class="error-message">
+      {{ errorState.message }}
+    </div>
+  </div>
+
+</div>

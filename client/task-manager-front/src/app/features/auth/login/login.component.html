@@ -1,0 +1,34 @@
+<div class="login-container">
+  <h2>Iniciar sesión</h2>
+  
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Email:</label>
+      <input 
+        type="email" 
+        [(ngModel)]="email" 
+        name="email" 
+        required
+        [disabled]="loading">
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña:</label>
+      <input 
+        type="password" 
+        [(ngModel)]="password" 
+        name="password" 
+        required
+        [disabled]="loading">
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      <span *ngIf="!loading">Ingresar</span>
+      <span *ngIf="loading">Verificando...</span>
+    </button>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>
